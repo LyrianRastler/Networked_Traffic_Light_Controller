@@ -1,0 +1,137 @@
+// C++ code
+//
+int I[4];
+int counter[4];
+int Tg[4], T_max = 10;
+int i, T_cr = 0, del = 1000 ;
+int Setup[2];
+
+void setup()
+{
+  pinMode(13, INPUT);
+  pinMode(6, OUTPUT);
+  pinMode(12, INPUT);
+  Serial.begin(9600);
+
+  pinMode(5, OUTPUT);
+  pinMode(11, INPUT);
+  pinMode(4, OUTPUT);
+  pinMode(10, INPUT);
+  pinMode(3, OUTPUT);
+  
+  for(i=0;i<4;i++){ Tg[i] = 5000; }
+}
+
+void loop()
+{
+  
+  
+  
+    I[0] = digitalRead(13);
+    
+    while(I[0] !=0 && T_cr <= Tg[0] ){
+        I[0] = digitalRead(13);
+        
+        if (I[0] == 1) {
+          digitalWrite(6, HIGH);
+          delay(del); // Wait for 1000 millisecond(s)
+          T_cr += del;
+          
+        }
+        else{
+          counter[0] = 1;
+        }
+    }
+      digitalWrite(6, LOW);
+      delay(1000); // Wait for 1000 millisecond(s)
+      T_cr = 0;
+      
+      
+    I[1] = digitalRead(12);
+    
+    while(I[1] !=0 && T_cr <= Tg[1] ){
+        I[1] = digitalRead(12);
+        
+        if (I[1] == 1) {
+          digitalWrite(5, HIGH);
+          delay(del); // Wait for 1000 millisecond(s)
+          T_cr += del;
+          
+        }
+        else{
+          counter[1] = 1;
+        }
+    }
+      digitalWrite(5, LOW);
+      delay(1000); // Wait for 1000 millisecond(s)
+      T_cr = 0;
+      
+      
+    I[2] = digitalRead(11);
+    
+    while(I[2] !=0 && T_cr <= Tg[2] ){
+        I[2] = digitalRead(11);
+        
+        if (I[2] == 1) {
+          digitalWrite(4, HIGH);
+          delay(del); // Wait for 1000 millisecond(s)
+          T_cr += del;
+          
+        }
+        else{
+          counter[2] = 1;
+        }
+    }
+      digitalWrite(4, LOW);
+      delay(1000); // Wait for 1000 millisecond(s)
+      T_cr = 0;
+    
+    
+    I[3] = digitalRead(10);
+    
+    while(I[3] !=0 && T_cr <= Tg[3] ){
+        I[3] = digitalRead(10);
+        
+        if (I[3] == 1) {
+          digitalWrite(3, HIGH);
+          delay(del); // Wait for 1000 millisecond(s)
+          T_cr += del;
+          
+        }
+        else{
+          counter[3] = 1;
+        }
+    }
+      digitalWrite(3, LOW);
+      delay(1000); // Wait for 1000 millisecond(s)
+      T_cr = 0;
+      
+      
+      for(i=0;i<4;i++){
+        
+        if(counter[i] == 1){
+          
+          Tg[i] += -1000;
+          Setup[0]++;
+          
+        }
+        
+        if(counter[i] == 0){
+          
+          Setup[1]++;
+        
+      }
+      }
+      
+      for(i=0;i<4;i++){
+          
+          if(counter[i] = 0){
+            Tg[i] += Setup[0]/Setup[1] + 1;
+          }
+          
+          counter[i] = 0;
+      }
+  
+    
+      
+}
